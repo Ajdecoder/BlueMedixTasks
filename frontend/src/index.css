@@ -1,6 +1,3 @@
-.product-head{
-  color: black;
-}
-.product,ul{
-  
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

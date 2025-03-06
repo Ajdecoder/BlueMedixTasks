@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Badge, Plus, ShoppingCart, Star, User } from "lucide-react";
-import { Spinner } from "react-bootstrap";
+import {  Button, Card, CardHeader, CardTitle, Spinner } from "react-bootstrap";
 import { Loading } from "./ui/Spinner";
 import { useData } from "../context/DataContext";
 import { ListGroup, Container } from "react-bootstrap";
@@ -33,34 +33,61 @@ export const UsersCard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
-        <h2 className="text-center">Users</h2>
-        <button
-          onClick={() => navigate("/add-user")}
-          className="btn btn-primary"
-        >
-          <Plus />
-        </button>
+    <div className="container mx-auto p-6">
+      {/* Header Section */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold">Users</h2>
+        <Button onClick={() => navigate("/add-user")} className="flex items-center gap-2">
+          <Plus size={18} /> Add User
+        </Button>
       </div>
+
+      {/* Loading State */}
       {loading ? (
-        <div className="text-center mt-3">Loading...</div>
+        <div className="text-center text-lg font-medium">Loading...</div>
       ) : (
-        <ul className="list-group">
-          {users.map((user) => (
-            <li key={user.id} className="list-group-item">
-              <Link to={`/users/${user.id}`} className="text-decoration-none">
-                <strong>Username:</strong> {user.username} <br />
-                <strong>Email:</strong> {user.email} <br />
-                <strong>Phone:</strong> {user.phone} <br />
-                <strong>Name:</strong> {user.name?.firstname}{" "}
-                {user.name?.lastname} <br />
-                <strong>Address:</strong> {user.address?.street},{" "}
-                {user.address?.city}, {user.address?.zipcode}
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {users.map((user) => (
+          <Card
+            key={user.id}
+            className="bg-white shadow-md rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+          >
+            <CardHeader className="flex items-center gap-4 bg-gray-100 p-4 rounded-t-xl">
+              <User size={36} className="text-blue-600" />
+              <CardTitle className="text-lg font-semibold text-gray-900">
+                {user.username}
+              </CardTitle>
+            </CardHeader>
+      
+            <div className="p-4 space-y-2 text-gray-700">
+              <p>
+                <span className="font-medium text-gray-900">Email:</span> {user.email}
+              </p>
+              <p>
+                <span className="font-medium text-gray-900">Phone:</span> {user.phone}
+              </p>
+              <p>
+                <span className="font-medium text-gray-900">Name:</span> {user.name?.firstname}{" "}
+                {user.name?.lastname}
+              </p>
+              <p>
+                <span className="font-medium text-gray-900">Address:</span>{" "}
+                {user.address?.street}, {user.address?.city}, {user.address?.zipcode}
+              </p>
+            </div>
+      
+            <div className="bg-gray-100 p-4 rounded-b-xl">
+              <Link
+                to={`/users/${user.id}`}
+                className="text-blue-500 font-medium hover:text-blue-700 transition no-underline"
+              >
+                View Profile →
               </Link>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </Card>
+        ))}
+      </div>
+      
       )}
     </div>
   );
@@ -78,88 +105,113 @@ export const UserDetails = () => {
 
   if (loading)
     return (
-      <p className="text-center mt-3">
+      <div className="flex justify-center items-center min-h-[200px]">
         <Loading />
-      </p>
+      </div>
     );
-  if (!user) return <p className="text-center mt-3">User not found</p>;
+
+  if (!user)
+    return (
+      <p className="text-center text-red-500 font-medium mt-4">User not found</p>
+    );
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-primary">
-        {user.username} <User />
-      </h2>
-      <p>Email: {user.email}</p>
+    <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-xl p-6 border">
+      <div className="flex items-center gap-3 border-b pb-4">
+        <User size={36} className="text-blue-600" />
+        <h2 className="text-2xl font-semibold text-gray-900">
+          {user.username}
+        </h2>
+      </div>
+
+      <div className="mt-4 space-y-2 text-gray-700">
+        <p>
+          <span className="font-medium text-gray-900">Email:</span> {user.email}
+        </p>
+        <p>
+          <span className="font-medium text-gray-900">Phone:</span> {user.phone}
+        </p>
+        <p>
+          <span className="font-medium text-gray-900">Name:</span> {user.name?.firstname}{" "}
+          {user.name?.lastname}
+        </p>
+        <p>
+          <span className="font-medium text-gray-900">Address:</span>{" "}
+          {user.address?.street}, {user.address?.city}, {user.address?.zipcode}
+        </p>
+      </div>
     </div>
   );
 };
 
+
 // 🔹 Products List
 export const Products = () => {
-  const { products, loading } = useData(); // Get data from context
+  const { products, loading } = useData();
   const navigate = useNavigate();
 
-  const addProduct = () => {
-    navigate("/add-product");
-  };
-
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
-        <h2 className="text-center">
-          Products <ShoppingCart />
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold flex items-center gap-2">
+          Products <ShoppingCart className="text-green-500" />
         </h2>
-        <button onClick={addProduct} className="btn btn-success">
-          <Plus />
+        <button
+          onClick={() => navigate("/add-product")}
+          className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-600 transition"
+        >
+          <Plus size={18} /> Add Product
         </button>
       </div>
+
+      {/* Loading State */}
       {loading ? (
-        <div className="text-center mt-3">
-          <Loading />
-        </div>
+        <p className="text-center text-gray-500">Loading...</p>
       ) : (
-        <Container className="mt-4">
-      <h2 className="text-center mb-4">Product List</h2>
-      <ListGroup variant="flush" className="shadow-sm rounded">
-        {products.map((product) => (
-          <ListGroup.Item
-            key={product.id}
-            className="d-flex align-items-center gap-3 p-3"
-          >
-            {/* Product Image */}
-            <img
-              src={product.image}
-              alt={product.title}
-              rounded
-              style={{ width: "50px", height: "50px", objectFit: "contain" }}
-            />
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition border"
+            >
+              <Link className="no-underline" to={`/products/${product.id}`}>
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-40 object-contain mb-3 rounded-lg"
+                />
+                <h3 className="text-lg font-semibold text-gray-900 truncate">
+                  {product.title}
+                </h3>
+                <p className="text-gray-600 text-sm uppercase tracking-wide">
+                  {product.category}
+                </p>
 
-            {/* Product Details */}
-            <div className="flex-grow-1">
-              <Link
-                to={`/products/${product.id}`}
-                className="text-decoration-none fw-bold text-dark"
-              >
-                {product.title}
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-green-600 font-bold text-lg">
+                    ${product.price}
+                  </span>
+                  <div className="flex items-center text-yellow-500">
+                    <Star size={16} />
+                    <span className="ml-1">
+                      {product.rating?.rate} ({product.rating?.count})
+                    </span>
+                  </div>
+                </div>
               </Link>
-              <div className="text-muted small">{product.category?.toUpperCase()}</div>
-            </div>
 
-            {/* Price & Rating */}
-            <div className="text-end">
-              <h5 className="fw-bold text-success mb-1">${product?.price}</h5>
-              <Badge bg="warning" text="dark">
-                <Star size={12} className="mb-1" /> {product.rating?.rate} ({product.rating?.count})
-              </Badge>
+              <button className="mt-3 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+                Add to Cart
+              </button>
             </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Container>
+          ))}
+        </div>
       )}
     </div>
   );
 };
+
 
 // 🔹 Product Details
 export const ProductDetails = () => {
@@ -173,22 +225,49 @@ export const ProductDetails = () => {
 
   if (loading)
     return (
-      <p className="text-center mt-3">
+      <div className="flex justify-center items-center min-h-[200px]">
         <Loading />
+      </div>
+    );
+
+  if (!product)
+    return (
+      <p className="text-center text-red-500 font-medium mt-4">
+        Product not found
       </p>
     );
-  if (!product) return <p className="text-center mt-3">Product not found</p>;
 
   return (
-    <div className="container mt-4 text-center">
-      <h2 className="text-danger">{product.title}</h2>
-      <p className="fw-bold">Price: ${product.price}</p>
-      <img
-        src={product.image}
-        alt={product.title}
-        className="img-fluid rounded"
-        width={200}
-      />
+    <div className="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-xl border">
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Product Image */}
+        <img
+          src={product.image}
+          alt={product.title}
+          className="w-full h-80 object-contain rounded-lg"
+        />
+
+        {/* Product Info */}
+        <div className="flex flex-col justify-center">
+          <h2 className="text-2xl font-bold text-gray-900">{product.title}</h2>
+          <p className="text-gray-700 text-lg mt-2">
+            {product.description}
+          </p>
+          <p className="text-green-600 font-bold text-xl mt-3">
+            ${product.price}
+          </p>
+          <div className="flex items-center text-yellow-500 mt-2">
+            <Star size={20} />
+            <span className="ml-1 text-lg">
+              {product.rating?.rate} ({product.rating?.count})
+            </span>
+          </div>
+          <button className="mt-5 w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition">
+            Add to Cart
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
+
