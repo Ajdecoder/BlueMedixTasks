@@ -3,9 +3,12 @@ import { ProductDetails, Products, UserDetails, UsersCard } from "./components/F
 import { NavbarComponent } from "./components/ui/Navbar";
 import Dashboard from "./components/Dashboard";
 import { HomePage } from "./components/Home";
+import { DataProvider } from "./context/DataContext";
+import AddUser, { AddProduct } from "./components/AddUps/Add";
 const App = () => {
   return (
-    <Router>
+   <DataProvider>
+     <Router>
       <NavbarComponent/> 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -13,12 +16,13 @@ const App = () => {
         <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/add-user" element={<ProductDetails />} />
-        <Route path="/add-product" element={<ProductDetails />} />
+        <Route path="/add-user" element={<AddUser />} />
+        <Route path="/add-product" element={<AddProduct />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
       </Routes>
     </Router>
+   </DataProvider>
   );
 };
 
