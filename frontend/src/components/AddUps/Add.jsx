@@ -59,7 +59,7 @@ export const AddProduct = () => {
                   name="title"
                   value={product.title}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="e.g., Premium Wireless Headphones"
                   required
                 />
@@ -76,7 +76,7 @@ export const AddProduct = () => {
                     name="price"
                     value={product.price}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="0.00"
                     step="0.01"
                     required
@@ -92,7 +92,7 @@ export const AddProduct = () => {
                     name="category"
                     value={product.category}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="e.g., Electronics"
                     required
                   />
@@ -109,7 +109,7 @@ export const AddProduct = () => {
                   name="image"
                   value={product.image}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="https://example.com/image.jpg"
                   required
                 />
@@ -125,7 +125,7 @@ export const AddProduct = () => {
                   rows={3}
                   value={product.description}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="Detailed product description..."
                   required
                 />
@@ -145,7 +145,7 @@ export const AddProduct = () => {
                     step="0.1"
                     value={product.rating.rate}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="4.5"
                     required
                   />
@@ -162,7 +162,7 @@ export const AddProduct = () => {
                     min="0"
                     value={product.rating.count}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="120"
                     required
                   />
@@ -238,7 +238,7 @@ export const AddUser = () => {
                     name="name.firstname"
                     value={user.name.firstname}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="John"
                     required
                   />
@@ -253,7 +253,7 @@ export const AddUser = () => {
                     name="name.lastname"
                     value={user.name.lastname}
                     onChange={handleChange}
-                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                     placeholder="Doe"
                     required
                   />
@@ -269,7 +269,7 @@ export const AddUser = () => {
                   name="username"
                   value={user.username}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="johndoe123"
                   required
                 />
@@ -285,7 +285,7 @@ export const AddUser = () => {
                   name="email"
                   value={user.email}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="john@example.com"
                   required
                 />
@@ -301,7 +301,7 @@ export const AddUser = () => {
                   name="phone"
                   value={user.phone}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="+1 (555) 123-4567"
                   required
                 />
@@ -317,7 +317,7 @@ export const AddUser = () => {
                   name="password"
                   value={user.password}
                   onChange={handleChange}
-                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full shadow-sm sm:text-sm rounded-md border-gray-700 focus:ring-blue-500 focus:border-blue-500 p-2"
                   placeholder="••••••••"
                   required
                 />
