@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Form, Container, Card } from "react-bootstrap";
+import { useData } from "../../context/DataContext"; // Import context hook
 
 export const AddProduct = () => {
   const [product, setProduct] = useState({ title: "", price: "", image: "" });
   const navigate = useNavigate();
+  const { addProduct } = useData(); // Get addProduct from context
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -14,9 +16,15 @@ export const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://jsonplaceholder.typicode.com/posts", product);
-      console.log("Added Product:", response.data);
-      alert("Product added successfully (mocked)!");
+      // Mock API call
+      await axios.post("https://jsonplaceholder.typicode.com/posts", product);
+      // Add to local state
+      addProduct({
+        ...product,
+        id: Date.now(), // Temporary unique ID
+        price: parseFloat(product.price)
+      });
+      alert("Product added successfully!");
       navigate("/products");
     } catch (error) {
       console.error("Error adding product:", error);
@@ -50,6 +58,7 @@ export const AddProduct = () => {
 export const AddUser = () => {
   const [user, setUser] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate();
+  const { addUser } = useData(); // Get addUser from context
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -58,9 +67,14 @@ export const AddUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://jsonplaceholder.typicode.com/users", user);
-      console.log("Added User:", response.data);
-      alert("User added successfully (mocked)!");
+      // Mock API call
+      await axios.post("https://jsonplaceholder.typicode.com/users", user);
+      // Add to local state
+      addUser({
+        ...user,
+        id: Date.now() // Temporary unique ID
+      });
+      alert("User added successfully!");
       navigate("/users");
     } catch (error) {
       console.error("Error adding user:", error);

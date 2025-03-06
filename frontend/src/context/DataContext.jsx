@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../components/FakestoreCrud";
 
-export const API_URL = "https://fakestoreapi.com";
 
 // Create Context
 const DataContext = createContext();
@@ -15,11 +15,10 @@ export const DataProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Fetch users & products on load
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             try {
+                setLoading(true);
                 const [usersRes, productsRes] = await Promise.all([
                     axios.get(`${API_URL}/users`),
                     axios.get(`${API_URL}/products`)
@@ -32,15 +31,14 @@ export const DataProvider = ({ children }) => {
                 setLoading(false);
             }
         };
+
         fetchData();
     }, []);
 
-    // Function to add user locally
     const addUser = (newUser) => {
         setUsers((prevUsers) => [...prevUsers, { id: prevUsers.length + 1, ...newUser }]);
     };
 
-    // Function to add product locally
     const addProduct = (newProduct) => {
         setProducts((prevProducts) => [...prevProducts, { id: prevProducts.length + 1, ...newProduct }]);
     };

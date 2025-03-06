@@ -4,7 +4,7 @@ import { NavbarComponent } from "./components/ui/Navbar";
 import Dashboard from "./components/Dashboard";
 import { HomePage } from "./components/Home";
 import { DataProvider } from "./context/DataContext";
-import AddUser, { AddProduct } from "./components/AddUps/Add";
+import {AddUser,  AddProduct } from "./components/AddUps/Add";
 const App = () => {
   return (
    <DataProvider>
