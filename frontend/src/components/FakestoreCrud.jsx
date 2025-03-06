@@ -53,10 +53,10 @@ export const UsersCard = () => {
                 <strong>Username:</strong> {user.username} <br />
                 <strong>Email:</strong> {user.email} <br />
                 <strong>Phone:</strong> {user.phone} <br />
-                <strong>Name:</strong> {user.name.firstname}{" "}
-                {user.name.lastname} <br />
-                <strong>Address:</strong> {user.address.street},{" "}
-                {user.address.city}, {user.address.zipcode}
+                <strong>Name:</strong> {user.name?.firstname}{" "}
+                {user.name?.lastname} <br />
+                <strong>Address:</strong> {user.address?.street},{" "}
+                {user.address?.city}, {user.address?.zipcode}
               </Link>
             </li>
           ))}
@@ -142,14 +142,14 @@ export const Products = () => {
               >
                 {product.title}
               </Link>
-              <div className="text-muted small">{product.category.toUpperCase()}</div>
+              <div className="text-muted small">{product.category?.toUpperCase()}</div>
             </div>
 
             {/* Price & Rating */}
             <div className="text-end">
-              <h5 className="fw-bold text-success mb-1">${product.price}</h5>
+              <h5 className="fw-bold text-success mb-1">${product?.price}</h5>
               <Badge bg="warning" text="dark">
-                <Star size={12} className="mb-1" /> {product.rating.rate} ({product.rating.count})
+                <Star size={12} className="mb-1" /> {product.rating?.rate} ({product.rating?.count})
               </Badge>
             </div>
           </ListGroup.Item>
