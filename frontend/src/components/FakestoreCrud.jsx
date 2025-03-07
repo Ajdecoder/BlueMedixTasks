@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Badge, Plus, ShoppingCart, Star, User } from "lucide-react";
-import {  Button, Card, CardHeader, CardTitle, Spinner } from "react-bootstrap";
+import { Badge, Plus, ShoppingCart, Star, User, X } from "lucide-react";
+import { Button, Card, CardHeader, CardTitle, Spinner } from "react-bootstrap";
 import { Loading } from "./ui/Spinner";
 import { useData } from "../context/DataContext";
 import { ListGroup, Container } from "react-bootstrap";
@@ -29,65 +29,83 @@ const fetchData = async (endpoint, setter, setLoading) => {
 };
 
 export const UsersCard = () => {
-  const { users, loading } = useData();
+  const { users, loading, setUsers } = useData();
   const navigate = useNavigate();
+
+  const handleRemoveClick = (uid) => {
+    setUsers(users.filter((user) => user.id !== uid));
+  };
 
   return (
     <div className="container mx-auto p-6">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold">Users</h2>
-        <Button onClick={() => navigate("/add-user")} className="flex items-center gap-2">
-          <Plus size={18} /> Add User
+        <Button
+          onClick={() => navigate("/add-user")}
+          className="flex items-center gap-2"
+        >
+          <Plus size={18} />
         </Button>
       </div>
 
       {/* Loading State */}
       {loading ? (
-        <div className="text-center text-lg font-medium">Loading...</div>
+        <div className="text-center text-lg font-medium">
+          <Spinner />
+        </div>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {users.map((user) => (
-          <Card
-            key={user.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
-          >
-            <CardHeader className="flex items-center gap-4 bg-gray-100 p-4 rounded-t-xl">
-              <User size={36} className="text-blue-600" />
-              <CardTitle className="text-lg font-semibold text-gray-900">
-                {user.username}
-              </CardTitle>
-            </CardHeader>
-      
-            <div className="p-4 space-y-2 text-gray-700">
-              <p>
-                <span className="font-medium text-gray-900">Email:</span> {user.email}
-              </p>
-              <p>
-                <span className="font-medium text-gray-900">Phone:</span> {user.phone}
-              </p>
-              <p>
-                <span className="font-medium text-gray-900">Name:</span> {user.name?.firstname}{" "}
-                {user.name?.lastname}
-              </p>
-              <p>
-                <span className="font-medium text-gray-900">Address:</span>{" "}
-                {user.address?.street}, {user.address?.city}, {user.address?.zipcode}
-              </p>
-            </div>
-      
-            <div className="bg-gray-100 p-4 rounded-b-xl">
-              <Link
-                to={`/users/${user.id}`}
-                className="text-blue-500 font-medium hover:text-blue-700 transition no-underline"
-              >
-                View Profile →
-              </Link>
-            </div>
-          </Card>
-        ))}
-      </div>
-      
+          {users.map((user) => (
+            <Card
+              key={user.id}
+              className="bg-white shadow-md rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+            >
+              <CardHeader className="flex items-center gap-4 bg-gray-100 p-4 rounded-t-xl">
+                <User size={36} className="text-blue-600" />
+                <CardTitle className="text-lg font-semibold text-gray-900">
+                  {user.username}
+                </CardTitle>
+              </CardHeader>
+
+              <div className="p-4 space-y-2 text-gray-700">
+                <p>
+                  <span className="font-medium text-gray-900">Email:</span>{" "}
+                  {user.email}
+                </p>
+                <p>
+                  <span className="font-medium text-gray-900">Phone:</span>{" "}
+                  {user.phone}
+                </p>
+                <p>
+                  <span className="font-medium text-gray-900">Name:</span>{" "}
+                  {user.name?.firstname} {user.name?.lastname}
+                </p>
+                <p>
+                  <span className="font-medium text-gray-900">Address:</span>{" "}
+                  {user.address?.street}, {user.address?.city},{" "}
+                  {user.address?.zipcode}
+                </p>
+              </div>
+
+              <div className="bg-gray-100 p-4 rounded-b-xl flex justify-between align-items-center">
+                <Link
+                  to={`/users/${user.id}`}
+                  className="text-blue-500 font-medium hover:text-blue-700 transition no-underline"
+                >
+                  View Profile →
+                </Link>
+
+                <button
+                  onClick={() => handleRemoveClick(user.id)}
+                  className="bg-green-600 p-2 rounded-lg transition-colors duration-300 hover:bg-red-700"
+                >
+                  <X />
+                </button>
+              </div>
+            </Card>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -112,7 +130,9 @@ export const UserDetails = () => {
 
   if (!user)
     return (
-      <p className="text-center text-red-500 font-medium mt-4">User not found</p>
+      <p className="text-center text-red-500 font-medium mt-4">
+        User not found
+      </p>
     );
 
   return (
@@ -132,8 +152,8 @@ export const UserDetails = () => {
           <span className="font-medium text-gray-900">Phone:</span> {user.phone}
         </p>
         <p>
-          <span className="font-medium text-gray-900">Name:</span> {user.name?.firstname}{" "}
-          {user.name?.lastname}
+          <span className="font-medium text-gray-900">Name:</span>{" "}
+          {user.name?.firstname} {user.name?.lastname}
         </p>
         <p>
           <span className="font-medium text-gray-900">Address:</span>{" "}
@@ -144,11 +164,14 @@ export const UserDetails = () => {
   );
 };
 
-
 // 🔹 Products List
 export const Products = () => {
-  const { products, loading } = useData();
+  const { products, loading, setProducts } = useData();
   const navigate = useNavigate();
+
+  const handleRemoveClick = (pid) => {
+    setProducts(products.filter((product) => product.id !== pid));
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -167,14 +190,23 @@ export const Products = () => {
 
       {/* Loading State */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+        <p className="text-center text-gray-500">
+          <Spinner />
+        </p>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition border"
+              className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition border "
             >
+              <button
+                onClick={() => handleRemoveClick(product.id)}
+                className="bg-green-600 p-2 rounded-lg transition-colors duration-300 hover:bg-red-700 relative left-[85%]"
+              >
+                <X />
+              </button>
+
               <Link className="no-underline" to={`/products/${product.id}`}>
                 <img
                   src={product.image}
@@ -211,7 +243,6 @@ export const Products = () => {
     </div>
   );
 };
-
 
 // 🔹 Product Details
 export const ProductDetails = () => {
@@ -250,9 +281,7 @@ export const ProductDetails = () => {
         {/* Product Info */}
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-bold text-gray-900">{product.title}</h2>
-          <p className="text-gray-700 text-lg mt-2">
-            {product.description}
-          </p>
+          <p className="text-gray-700 text-lg mt-2">{product.description}</p>
           <p className="text-green-600 font-bold text-xl mt-3">
             ${product.price}
           </p>
@@ -270,4 +299,3 @@ export const ProductDetails = () => {
     </div>
   );
 };
-
